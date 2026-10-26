@@ -1,4 +1,17 @@
 .venv/
 __pycache__/
-runs/
 *.pyc
+.ipynb_checkpoints/
+.pytest_cache/
+
+# raw data is large; recreate it with a download script
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# training outputs
+experiments/runs/
+experiments/logs/
+*.zip
+tensorboard/
