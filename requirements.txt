@@ -1,0 +1,10 @@
+gymnasium
+numpy
+pandas
+pyyaml
+scipy
+statsmodels
+matplotlib
+stable-baselines3
+tensorboard
+pytest
