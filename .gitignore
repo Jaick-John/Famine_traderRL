@@ -11,7 +11,7 @@ data/processed/*
 !data/processed/.gitkeep
 
 # training outputs
-experiments/runs/
-experiments/logs/
+experiments/*
+!experiments/.gitkeep
 *.zip
 tensorboard/
