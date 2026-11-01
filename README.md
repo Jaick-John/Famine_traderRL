@@ -13,6 +13,21 @@ pip install -r requirements.txt
 python check_setup.py
 ```
 
+## Real data
+
+Put these three files in `data/raw/` (the folder is gitignored):
+
+| File | Source |
+|---|---|
+| `wheat_zw.csv` | Wheat futures `ZW=F` from yfinance, columns `Date,Close` |
+| `fao_ffpi.csv` | FAO Food Price Index CSV (monthly, includes `Cereals`) |
+| `oni.txt` | NOAA CPC ONI: `https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt` |
+
+`configs/ppo_default.yaml` points `data_source` at `data/raw`. Data is split by
+date: train 60% / val 15% / test 25%. Training uses train, evaluation during
+training uses val, and `analysis/compare.py` and `demo/demo_run.py` use test.
+Set `data_source: null` to use synthetic data instead.
+
 ## Structure
 
 - `envs/` gymnasium environment (owner: Jaick)

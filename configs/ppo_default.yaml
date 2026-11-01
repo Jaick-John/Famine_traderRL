@@ -1,0 +1,56 @@
+# PPO Hyperparameters — Famine Trader
+# Adjust these before training; train.py reads this file.
+
+experiment_name: "ppo_famine_v1"
+
+# Environment
+env:
+  data_source: data/raw      # folder with wheat_zw.csv, fao_ffpi.csv, oni.txt; null = synthetic
+  train_split: train         # chronological: train 60% | val 15% | test 25%
+  eval_split: val            # used during training; "test" is only for final comparison
+  episode_length: 252        # ~1 trading year
+  initial_cash: 10000.0
+  max_inventory: 100
+  holding_cost_rate: 0.005
+  trade_cost_rate: 0.002
+  shock_penalty: 5.0
+  relief_bonus: 10.0
+  n_envs: 4                  # parallel environments for faster data collection
+
+# PPO algorithm (stable-baselines3 PPO kwargs)
+ppo:
+  learning_rate: 0.0003
+  n_steps: 2048              # steps per env before each update
+  batch_size: 64
+  n_epochs: 10
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_range: 0.2
+  ent_coef: 0.02             # entropy bonus — encourages exploration of trading states
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+  normalize_advantage: true
+
+# Policy network
+policy:
+  type: "MlpPolicy"
+  net_arch:
+    pi: [256, 256]           # actor layers
+    vf: [256, 256]           # critic layers
+  activation_fn: "tanh"
+
+# Training schedule
+training:
+  total_timesteps: 500000    # increase to 2_000_000 for serious training
+  eval_freq: 20000           # evaluate every N steps
+  n_eval_episodes: 10
+  deterministic_eval: true
+  save_freq: 50000           # save checkpoint every N steps
+
+# Logging
+logging:
+  tensorboard: true
+  verbose: 1
+
+# Random seeds
+seed: 42
